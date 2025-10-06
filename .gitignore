@@ -1,1 +1,41 @@
+# Python 
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+env/
+.venv/
+ENV/
+
+# Flask & instance files
+instance/
+*.db
+*.sqlite3
+
+# System 
+.DS_Store
+Thumbs.db
+
+# Logs & Cache
+*.log
+*.pot
+*.pyc
+.cache/
+*.pyo
+
+# VSCode / JetBrains
+.vscode/
+.idea/
+
+# Env variables
+.env
+
+# Node / frontend
+node_modules/
+
+# Backups
+*.bak
+*.swp
 
