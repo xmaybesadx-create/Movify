@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Вхід{% endblock %}
+
+{% block body %}
+<h1 class="form-title">Вхід до аккаунту</h1>
+
+<div class="login-container">
+  <div class="form-header"></div>
+
+  <form class="form-body" method="post" action="{{ url_for('login') }}">
+    <label for="username">Username *</label>
+    <input type="text" class="form-control" id="username" name="username"
+           placeholder="Введіть ім'я користувача" required>
+
+    <label for="password">Password *</label>
+    <input type="password" class="form-control" id="password" name="password"
+           placeholder="Введіть пароль" required>
+
+    <label>
+      <input type="checkbox" name="remember">
+      Запам'ятати мене
+    </label>
+
+    <button type="submit" class="btn btn-auth w-100">УВІЙТИ</button>
+  </form>
+
+  <div class="register-footer">
+    <a href="{{ url_for('register') }}">Ще немає аккаунту?</a>
+    <a href="#">Забули пароль?</a>
+  </div>
+</div>
+
+<img src="{{ url_for('static', filename='img/maan.png') }}"
+     alt="Картинка для регистрации" class="register-img">
+{% endblock %}

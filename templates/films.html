@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Фильмы{% endblock %}
+
+{% block body %}
+<h1 class="mb-4">Фильмы по жанрам</h1>
+
+<div class="film-section">
+  {% for genre, films in genres.items() %}
+    <h2 class="genre-title">{{ genre }}</h2>
+    <div class="film-grid">
+      {% for film in films %}
+      <div class="film-card">
+       <div class="film-thumb"
+     style="background-image: url({{ url_for('static', filename='img/' ~ film.image) }});">
+        </div>
+
+
+        <div class="film-info">
+          <h3>{{ film.title }}</h3>
+          <p>{{ film.desc }}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}
