@@ -1,10 +1,34 @@
-
 {% extends 'base.html' %}
 
-{% block title %}
-Налаштування
-{% endblock %}
+{% block title %}Налаштування{% endblock %}
 
 {% block body %}
-<h1>Налаштування</h1>
+
+<div class="d-flex justify-content-center align-items-center" style="min-height: 60vh;">
+  <button type="button"
+          class="theme-toggle-btn"
+          id="theme-toggle-btn">
+    Змінити тему
+  </button>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const btn = document.getElementById('theme-toggle-btn');
+    const body = document.getElementById('page-body');
+
+    if (!btn || !body) return;
+
+    btn.addEventListener('click', function () {
+      const isDark = body.classList.toggle('dark-theme');
+      // сохраняем выбор
+      if (isDark) {
+        localStorage.setItem('theme', 'dark');
+      } else {
+        localStorage.setItem('theme', 'light');
+      }
+    });
+  });
+</script>
+
 {% endblock %}

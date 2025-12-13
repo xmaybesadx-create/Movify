@@ -1,8 +1,28 @@
 {% extends 'base.html' %}
 
-{% block title %}
-Улюблені
-{% endblock %}
+{% block title %}Улюблені{% endblock %}
 
 {% block body %}
-<h1>Улюблені</h1>
+<h1 class="mb-4">Улюблені</h1>
+
+{% if movies %}
+  <div class="film-section">
+    <div class="film-grid">
+      {% for film in movies %}
+        <div class="film-card">
+          <div class="film-thumb"
+               style="background-image: url({{ url_for('static', filename='img/' ~ film.image) }});">
+          </div>
+          <div class="film-info d-flex flex-column">
+            <h3 class="mb-1">{{ film.title }}</h3>
+            <p class="mb-2">{{ film.desc }}</p>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% else %}
+  <p>У вас поки немає улюблених фільмів чи мультфільмів.</p>
+{% endif %}
+{% endblock %}
+

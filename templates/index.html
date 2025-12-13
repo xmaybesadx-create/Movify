@@ -1,31 +1,61 @@
+{% extends 'base.html' %}
 
-{%extends 'base.html'%}
-
-{% block title %}
-Головна сторінка
-{% endblock %}
-
-
+{% block title %}Головна сторінка{% endblock %}
 
 {% block body %}
-<div class="hero-section">
-    <div class="hero-content">
-        <h1>Movify</h1>
-        <p class="lead">Лучший сайт для поиска, обсуждения и оценки фильмов.
-            Здесь вы найдете подборки, споры, рейтинги и свои любимые жанры!</p>
+
+<!-- Фуллскрін карусель -->
+<div id="movifyCarousel" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+
+    <div class="carousel-item active">
+      <div class="hero-slide hero-slide-1 d-flex align-items-center justify-content-center">
+        <div class="hero-overlay"></div>
+        <h1 class="hero-title">Movify</h1>
+      </div>
     </div>
+
+    <div class="carousel-item">
+      <div class="hero-slide hero-slide-2 d-flex align-items-center justify-content-center">
+        <div class="hero-overlay"></div>
+        <h1 class="hero-title">Movify</h1>
+      </div>
+    </div>
+
+    <div class="carousel-item">
+      <div class="hero-slide hero-slide-3 d-flex align-items-center justify-content-center">
+        <div class="hero-overlay"></div>
+        <h1 class="hero-title">Movify</h1>
+      </div>
+    </div>
+
+  </div>
+
+  <button class="carousel-control-prev" type="button" data-bs-target="#movifyCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Назад</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#movifyCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Вперед</span>
+  </button>
 </div>
-<div class="features">
-    <div class="feature-block">
-        <h2>Фільми</h2>
-        <p>Дивіться тільки найцікавіші фільми.</p>
-    </div>
-    <div class="feature-block">
-        <h2>Мультфільми</h2>
-        <p>Пориньте в історії 1000+ мультфільмів.</p>
-    </div>
-    <div class="feature-block">
-        <h2>Про нас</h2>
-        <p>Дізнайтеся нове про наш додаток.</p>
-    </div>
+
+<!-- Блоки под каруселью -->
+<div class="features container mt-5 mb-4">
+  <div class="feature-block">
+    <h2>Фільми</h2>
+    <p>Дивіться тільки найцікавіші фільми.</p>
+  </div>
+  <div class="feature-block">
+    <h2>Мультфільми</h2>
+    <p>Пориньте в історії 1000+ мультфільмів.</p>
+  </div>
+  <div class="feature-block">
+    <h2>Про нас</h2>
+    <p>Дізнайтеся нове про наш додаток.</p>
+  </div>
+</div>
+
+{% endblock %}
 

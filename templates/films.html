@@ -1,27 +1,45 @@
-
 {% extends 'base.html' %}
 
-{% block title %}Фильмы{% endblock %}
+{% block title %}Фільми{% endblock %}
 
 {% block body %}
-<h1 class="mb-4">Фильмы по жанрам</h1>
+<h1 class="mb-4">Фільми</h1>
+
+<a id="films-section"></a>
 
 <div class="film-section">
   {% for genre, films in genres.items() %}
     <h2 class="genre-title">{{ genre }}</h2>
     <div class="film-grid">
       {% for film in films %}
-      <div class="film-card">
-       <div class="film-thumb"
-     style="background-image: url({{ url_for('static', filename='img/' ~ film.image) }});">
-        </div>
+        <div class="film-card">
+          <div class="film-thumb"
+               style="background-image: url({{ url_for('static', filename='img/' ~ film.image) }});">
+          </div>
+          <div class="film-info d-flex flex-column">
+            <h3 class="mb-1">{{ film.title }}</h3>
+            <p class="mb-2">{{ film.desc }}</p>
 
+            <div class="mt-auto">
+              text
+<form method="post" action="{{ url_for('add_favorite') }}">
+  <input type="hidden" name="film_id" value="{{ film.id }}">
 
-        <div class="film-info">
-          <h3>{{ film.title }}</h3>
-          <p>{{ film.desc }}</p>
+  {% if film.id in favorite_ids %}
+    <button type="submit"
+            class="btn btn-sm btn-favorite w-100">
+      Улюблене
+    </button>
+  {% else %}
+    <button type="submit"
+            class="btn btn-sm btn-outline-danger w-100">
+      ❤ В улюблені
+    </button>
+  {% endif %}
+</form>
+            </div>
+          </div>
         </div>
-      </div>
       {% endfor %}
     </div>
   {% endfor %}
