@@ -12,7 +12,7 @@ permissions:
 env:
   PYTHON_VERSION: '3.12'
   FLASK_ENV: test
-  PROJECT_DIR: './'  # <-- измените, если requirements.txt и код лежат в поддиректории, например './flask_app'
+  PROJECT_DIR: './'  # если проект в поддиректории, укажи путь, например './flask_app'
 
 jobs:
   test:
@@ -47,7 +47,7 @@ jobs:
         working-directory: ${{ env.PROJECT_DIR }}
         run: |
           mkdir -p reports
-          pytest --junitxml=reports/report.xml || true
+          pytest --junitxml=reports/report.xml
 
       # Загружаем отчет о тестах
       - name: Upload test report
@@ -71,11 +71,13 @@ jobs:
         working-directory: ${{ env.PROJECT_DIR }}
         run: pip install -r requirements.txt
 
+      # Сборка проекта без копирования dist в себя
       - name: Build app
         working-directory: ${{ env.PROJECT_DIR }}
         run: |
           mkdir -p dist
-          cp -r . dist/
+          # Копируем только нужные папки и файлы
+          cp -r app templates static run.py config.py dist/ || true
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
@@ -105,6 +107,5 @@ jobs:
           echo "Deploying Flask app with token: ${DEPLOY_TOKEN:0:4}****"
           ls -la ./artifact
           echo "Deploy success"
-
 
 
