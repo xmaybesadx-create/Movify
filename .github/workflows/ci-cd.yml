@@ -2,7 +2,7 @@ name: CI/CD (Flask)
 
 on:
   push:
-    branches: ["**"]   # запуск на любую ветку
+    branches: ["**"]
   pull_request:
 
 permissions:
@@ -12,6 +12,7 @@ permissions:
 env:
   PYTHON_VERSION: '3.12'
   FLASK_ENV: test
+  PROJECT_DIR: './'  # <-- измените, если requirements.txt и код лежат в поддиректории, например './flask_app'
 
 jobs:
   test:
@@ -22,9 +23,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Проверяем содержимое директории
-      - name: Show files
-        run: ls -la
+      # Проверяем текущую директорию и файлы
+      - name: Show current directory and files
+        run: |
+          pwd
+          ls -la ${{ env.PROJECT_DIR }}
 
       # Устанавливаем Python
       - name: Setup Python
@@ -34,14 +37,14 @@ jobs:
 
       # Устанавливаем зависимости
       - name: Install dependencies
-        working-directory: ./
+        working-directory: ${{ env.PROJECT_DIR }}
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
       # Запускаем тесты и сохраняем отчет
       - name: Run tests
-        working-directory: ./
+        working-directory: ${{ env.PROJECT_DIR }}
         run: |
           mkdir -p reports
           pytest --junitxml=reports/report.xml || true
@@ -52,7 +55,7 @@ jobs:
         if: always()
         with:
           name: junit-report
-          path: reports/report.xml
+          path: ${{ env.PROJECT_DIR }}/reports/report.xml
 
   build:
     name: Build App
@@ -65,11 +68,11 @@ jobs:
           python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Install dependencies
-        working-directory: ./
+        working-directory: ${{ env.PROJECT_DIR }}
         run: pip install -r requirements.txt
 
       - name: Build app
-        working-directory: ./
+        working-directory: ${{ env.PROJECT_DIR }}
         run: |
           mkdir -p dist
           cp -r . dist/
@@ -78,7 +81,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: app-build
-          path: dist
+          path: ${{ env.PROJECT_DIR }}/dist
 
   deploy:
     name: Deploy (staging)
@@ -102,5 +105,6 @@ jobs:
           echo "Deploying Flask app with token: ${DEPLOY_TOKEN:0:4}****"
           ls -la ./artifact
           echo "Deploy success"
+
 
 
