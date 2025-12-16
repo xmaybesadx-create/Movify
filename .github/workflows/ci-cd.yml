@@ -2,7 +2,7 @@ name: CI/CD (Flask)
 
 on:
   push:
-    branches: ["**"]   # запуск на будь-яку гілку
+    branches: ["**"]   # запуск на любую ветку
   pull_request:
 
 permissions:
@@ -18,22 +18,35 @@ jobs:
     name: Run Tests
     runs-on: ubuntu-latest
     steps:
+      # Клонируем репозиторий
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # Проверяем содержимое директории
+      - name: Show files
+        run: ls -la
+
+      # Устанавливаем Python
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: ${{ env.PYTHON_VERSION }}
 
+      # Устанавливаем зависимости
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        working-directory: ./
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
+      # Запускаем тесты и сохраняем отчет
       - name: Run tests
+        working-directory: ./
         run: |
           mkdir -p reports
           pytest --junitxml=reports/report.xml || true
 
+      # Загружаем отчет о тестах
       - name: Upload test report
         uses: actions/upload-artifact@v4
         if: always()
@@ -52,9 +65,11 @@ jobs:
           python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Install dependencies
+        working-directory: ./
         run: pip install -r requirements.txt
 
       - name: Build app
+        working-directory: ./
         run: |
           mkdir -p dist
           cp -r . dist/
@@ -87,4 +102,5 @@ jobs:
           echo "Deploying Flask app with token: ${DEPLOY_TOKEN:0:4}****"
           ls -la ./artifact
           echo "Deploy success"
+
 
