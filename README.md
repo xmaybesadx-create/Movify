@@ -37,3 +37,5 @@ Movify — це веб-додаток, який дозволяє користу�
 - [Список компонентів](docs/architecture/components.md)
 - [Діаграма архітектури (v1)](docs/architecture/architecture_v1.drawio)
 - [Таблиця відповідальностей](docs/architecture/ownership.md)
+
+![Tests](https://github.com/<KiERROKi>/<xmaybesadx-create>/actions/workflows/ci-cd.yml/badge.svg)
